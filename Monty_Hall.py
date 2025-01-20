@@ -30,6 +30,7 @@ for i in range(total_tests):
     shuffle(doors)
 
 for i in range(total_tests):
+    initial_choice = randint(0, 2)
     if try_to_swap():
         wins_swap += 1
     shuffle(doors)
