@@ -1,13 +1,12 @@
 from random import randint, shuffle, choice
 
-total_tests = 1000
-doors = ["car", "goat", "goat"]
+TOTAL_TESTS = 1000
 
-def try_to_stay() -> bool:
+def simulate_stay(doors, initial_choice) -> bool:
     return doors[initial_choice] == "car"
 
-def try_to_swap() -> bool:
-    # host removes one door that is not the initial choice, and not the car
+def simulate_swap(doors, initial_choice) -> bool:
+    # The host removes one door that is neither the initial choice nor the car
     can_open = []
     for i in range(3):
         if doors[i] != "car" and i != initial_choice:
@@ -19,22 +18,30 @@ def try_to_swap() -> bool:
         if i != host_opened and i != initial_choice:
             return doors[i] == "car"
 
-# ran tests
-wins_stay = 0
-wins_swap = 0
+def main():
+    doors = ["car", "nothing", "nothing"]
 
-for i in range(total_tests):
-    initial_choice = randint(0,2)
-    if try_to_stay():
-        wins_stay += 1
-    shuffle(doors)
+    # run tests
+    wins_stay = 0
+    wins_swap = 0
 
-for i in range(total_tests):
-    initial_choice = randint(0, 2)
-    if try_to_swap():
-        wins_swap += 1
-    shuffle(doors)
+    # Run tests
+    for i in range(TOTAL_TESTS):
+        initial_choice = randint(0,2)
+        # Simulate stay
+        if simulate_stay(doors, initial_choice):
+            wins_stay += 1
 
-print(f"Results after {total_tests} tests:")
-print(f"If you keep with your initial choice you will find a car in {wins_stay} out of {total_tests}, or in {wins_stay / total_tests * 100}%")
-print(f"If you swap your initial choice you will find a car in {wins_swap} out of {total_tests}, or in {wins_swap / total_tests * 100}%")
+        # Simulate swap
+        if simulate_swap(doors, initial_choice):
+            wins_swap += 1
+        shuffle(doors)
+
+    # Print results
+    print(f"Results after {TOTAL_TESTS} tests:")
+    print(f"If you keep with your initial choice you will find a car in {wins_stay} out of {TOTAL_TESTS}, or in {(wins_stay / TOTAL_TESTS * 100):.1f}%")
+    print(f"If you swap your initial choice you will find a car in {wins_swap} out of {TOTAL_TESTS}, or in {(wins_swap / TOTAL_TESTS * 100):.1f}%")
+
+
+if __name__ == "__main__":
+    main()
