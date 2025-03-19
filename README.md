@@ -5,7 +5,6 @@
 2. [My Solution](#My-Solution)
 3. [How to Run](#How-to-Run)
 4. [Results](#Results)
-5. [Note](#Note)
 
 ## The Problem
 The Monty Hall paradox is based on a game show
